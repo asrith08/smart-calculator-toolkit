@@ -1,4 +1,5 @@
-const CACHE_NAME = 'smart-calc-v1';
+// Inside sw.js
+const CACHE_NAME = 'calc-cache-v2'; // <-- Change v1 to v2 (or v3, v4, etc.)
 const ASSETS = [
   '/',
   '/manifest.json'
