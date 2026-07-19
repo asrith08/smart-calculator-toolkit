@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Calculator</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="manifest" href="/manifest.json">
+<!-- iOS App Meta Tags -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Smart Calc">
+<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2344/2344132.png">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <div id="appSidebar" class="sidebar">
+        <h1>Smart Calculator</h1>
+        <p class="subtitle">Multi Utility Toolkit</p>
+        
+        <button class="tab" onclick="showPage('calculator')">
+            🧮 Calculator
+        </button>
+        <button class="tab" onclick="showPage('cgpa')">
+            📊 CGPA Calculator
+        </button>
+        <button class="tab" onclick="showPage('converter')">
+            💱 Unit Converter
+        </button>
+        <button class="tab" onclick="showPage('age')">
+            📅 Age Calculator
+        </button>
+        <button class="tab" onclick="showPage('emi')">
+            💰 EMI Calculator
+        </button>
+        <button class="tab" onclick="showPage('notes')">
+            📝 Notes
+        </button>
+        <button class="tab" onclick="showPage('settings')">
+            ⚙ Settings
+        </button>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+
+        <div id="calculator" class="page" style="display:none;">
+            <button class="back-btn" onclick="goHome()">⬅ Back to Home</button>
+            <h2>🧮 Calculator</h2>
+
+            <!-- Mode Buttons -->
+            <div class="mode-buttons">
+                <button onclick="basicMode()">Basic</button>
+                <button onclick="scientificMode()">Scientific</button>
+            </div>
+
+            <!-- Display -->
+            <input type="text" id="calcDisplay" class="calc-display" placeholder="0" readonly>
+
+            <!-- Basic Buttons -->
+            <div id="basicButtons" class="calc-buttons">
+                <button onclick="appendValue('7')">7</button>
+                <button onclick="appendValue('8')">8</button>
+                <button onclick="appendValue('9')">9</button>
+                <button onclick="appendValue('/')">÷</button>
+
+                <button onclick="appendValue('4')">4</button>
+                <button onclick="appendValue('5')">5</button>
+                <button onclick="appendValue('6')">6</button>
+                <button onclick="appendValue('*')">×</button>
+
+                <button onclick="appendValue('1')">1</button>
+                <button onclick="appendValue('2')">2</button>
+                <button onclick="appendValue('3')">3</button>
+                <button onclick="appendValue('-')">−</button>
+
+                <button onclick="appendValue('0')">0</button>
+                <button onclick="appendValue('.')">.</button>
+                <button onclick="appendValue('%')">%</button>
+                <button onclick="appendValue('+')">+</button>
+
+                <button onclick="clearDisplay()">C</button>
+                <button onclick="backspace()">⌫</button>
+                <button onclick="square()">x²</button>
+                <button onclick="calculate()">=</button>
+            </div>
+
+            <!-- Scientific Buttons -->
+            <div id="scientificButtons" class="calc-buttons" style="display:none;">
+                <button onclick="scientificFunction('sin')">sin</button>
+                <button onclick="scientificFunction('cos')">cos</button>
+                <button onclick="scientificFunction('tan')">tan</button>
+                <button onclick="appendValue('Math.PI')">π</button>
+
+                <button onclick="scientificFunction('sqrt')">√</button>
+                <button onclick="scientificFunction('log')">log</button>
+                <button onclick="scientificFunction('ln')">ln</button>
+                <button onclick="appendValue('Math.E')">e</button>
+
+                <button onclick="square()">x²</button>
+                <button onclick="cube()">x³</button>
+                <button onclick="appendValue('**')">xʸ</button>
+                <button onclick="factorial()">!</button>
+
+                <button onclick="appendValue('(')">(</button>
+                <button onclick="appendValue(')')">)</button>
+                <button onclick="clearDisplay()">C</button>
+                <button onclick="calculate()">=</button>
+            </div>
+
+            <!-- History -->
+            <div class="history-box">
+                <h3>History</h3>
+                <ul id="historyList"></ul>
+            </div>
+        </div>
+
+        <div id="scientific" class="page" style="display:none;">
+            <button class="back-btn" onclick="goHome()">⬅ Back to Home</button>
+            <h2>📐 Scientific Calculator</h2>
+            <p>Scientific Calculator Module</p>
+        </div>
+
+        <div id="cgpa" class="page" style="display:none;">
+            <button class="back-btn" onclick="goHome()">⬅ Back to Home</button>
+            <h2>📊 CGPA Calculator</h2>
+            <p>Enter your subjects, grade points and credits.</p>
+
+            <table class="cgpa-table">
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Grade Point</th>
+                        <th>Credits</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="subjectTable">
+                    <tr>
+                        <td><input type="text" placeholder="Subject"></td>
+                        <td><input type="number" class="grade" placeholder="0-10"></td>
+                        <td><input type="number" class="credit" placeholder="Credits"></td>
+                        <td><button onclick="removeSubject(this)">❌</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <button class="cgpa-btn" onclick="addSubject()">➕ Add Subject</button>
+            <button class="cgpa-btn" onclick="calculateCGPA()">Calculate CGPA</button>
+            <button class="cgpa-btn reset" onclick="resetCGPA()">Reset</button>
+
+            <h3 id="cgpaResult">CGPA:</h3>
+            <h3 id="percentageResult">Percentage:</h3>
+        </div>
+
+        <div id="converter" class="page" style="display:none;">
+            <button class="back-btn" onclick="goHome()">⬅ Back to Home</button>
+            <h2>💱 Unit Converter</h2>
+
+            <label>Select Category</label>
+            <br>
+            <select id="conversionType" onchange="loadUnits()">
+                <option value="length">Length</option>
+                <option value="weight">Weight</option>
+                <option value="temperature">Temperature</option>
+                <option value="speed">Speed</option>
+                <option value="area">Area</option>
+                <option value="volume">Volume</option>
+                <option value="time">Time</option>
+            </select>
+            <br><br>
+            <input type="number" id="convertValue" placeholder="Enter value">
+            <br><br>
+            <select id="fromUnit"></select>
+            <span class="arrow">➡️</span>
+            <select id="toUnit"></select>
+            <br><br>
+            <button class="convert-btn" onclick="convertUnit()">Convert</button>
+            <button class="convert-btn reset" onclick="resetConverter()">Reset</button>
+
+            <h3 id="conversionResult">Result:</h3>
+        </div>
+
+        <div id="age" class="page" style="display:none;">
+            <button class="back-btn" onclick="goHome()">⬅ Back to Home</button>
+            <h2>📅 Age Calculator</h2>
+
+            <label>Select Your Date of Birth</label>
+            <br><br>
+            <input type="date" id="dob">
+            <br><br>
+            <button class="age-btn" onclick="calculateAge()">Calculate Age</button>
+            <button class="age-btn reset" onclick="resetAge()">Reset</button>
+
+            <div class="age-result">
+                <h3 id="ageResult">Age:</h3>
+                <h3 id="daysResult">Total Days Lived:</h3>
+                <h3 id="birthdayResult">Next Birthday:</h3>
+            </div>
+        </div>
+
+        <div id="emi" class="page" style="display:none;">
+            <button class="back-btn" onclick="goHome()">⬅ Back to Home</button>
+            <h2>💰 EMI Calculator</h2>
+
+            <label>Loan Amount (₹)</label>
+            <br>
+            <input type="number" id="loanAmount" placeholder="Enter Loan Amount">
+            <br><br>
+            <label>Interest Rate (% per year)</label>
+            <br>
+            <input type="number" id="interestRate" placeholder="Enter Interest Rate">
+            <br><br>
+            <label>Loan Tenure (Years)</label>
+            <br>
+            <input type="number" id="loanYears" placeholder="Enter Years">
+            <br><br>
+            <button class="emi-btn" onclick="calculateEMI()">Calculate EMI</button>
+            <button class="emi-btn reset" onclick="resetEMI()">Reset</button>
+
+            <div class="emi-result">
+                <h3 id="emiAmount">Monthly EMI:</h3>
+                <h3 id="totalInterest">Total Interest:</h3>
+                <h3 id="totalPayment">Total Payment:</h3>
+            </div>
+        </div>
+
+        <div id="notes" class="page" style="display:none;">
+            <button class="back-btn" onclick="goHome()">⬅ Back to Home</button>
+            <h2>📝 Notes</h2>
+
+            <textarea id="noteInput" placeholder="Write your note here..."></textarea>
+            <br><br>
+            <button class="note-btn" onclick="addNote()">Add Note</button>
+            <button class="note-btn clear" onclick="clearNotes()">Clear All</button>
+
+            <h3>Saved Notes</h3>
+            <div id="notesList"></div>
+        </div>
+
+        <div id="settings" class="page" style="display:none;">
+            <button class="back-btn" onclick="goHome()">⬅ Back to Home</button>
+            <h2>⚙ Settings</h2>
+
+            <h3>Theme</h3>
+            <button class="setting-btn" onclick="lightMode()">☀️ Light Mode</button>
+            <button class="setting-btn" onclick="darkMode()">🌙 Dark Mode</button>
+            <hr>
+            <h3>About</h3>
+            <div class="about-box">
+                <h2>🧮 Smart Calculator</h2>
+                <p>Version: 1.0</p>
+                <p>Developed by: Asrith</p>
+                <p>A multi-purpose calculation application with calculator, CGPA, converter, EMI, age calculator and notes.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="/static/script.js"></script>
+<script src="/static/script.js"></script>
+<script>
+  // Register the PWA service worker safely
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js")
+        .then((reg) => console.log("Service Worker registered successfully!", reg.scope))
+        .catch((err) => console.log("Service Worker registration failed:", err));
+    });
+  }
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('Service Worker registered successfully!', reg))
+        .catch(err => console.error('Service Worker registration failed:', err));
+    });
+  }
+</script>
+</body>
+</html>

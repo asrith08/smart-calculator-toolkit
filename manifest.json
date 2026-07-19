@@ -1,0 +1,18 @@
+{
+  "name": "Smart Calculator Multi Utility Toolkit",
+  "short_name": "Smart Calc",
+  "description": "A powerful multi-purpose calculator, CGPA, converter, and utility toolkit.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#1e293b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2344/2344132.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
